@@ -1,31 +1,3 @@
-# board = [
-#     [7, 8, 0, 4, 0, 0, 1, 2, 0],
-#     [6, 0, 0, 0, 7, 5, 0, 0, 9],
-#     [0, 0, 0, 6, 0, 1, 0, 7, 8],
-#     [0, 0, 7, 0, 4, 0, 2, 6, 0],
-#     [0, 0, 1, 0, 5, 0, 9, 3, 0],
-#     [9, 0, 4, 0, 6, 0, 0, 0, 5],
-#     [0, 7, 0, 3, 0, 0, 0, 1, 2],
-#     [1, 2, 0, 0, 0, 7, 4, 0, 0],
-#     [0, 4, 9, 2, 0, 6, 0, 0, 7]
-# ]
-
-""" 
-Sudoku del diario 
-"""
-board = [
-    [0, 0, 7, 0, 0, 0, 0, 8, 3],
-    [4, 0, 0, 7, 1, 0, 0, 0, 9],
-    [1, 5, 0, 2, 8, 0, 0, 0, 6],
-    [0, 0, 3, 0, 0, 0, 0, 1, 5],
-    [2, 0, 5, 1, 0, 7, 3, 0, 4],
-    [7, 6, 0, 0, 0, 0, 8, 0, 0],
-    [5, 0, 0, 0, 6, 0, 0, 3, 8],
-    [8, 0, 0, 0, 3, 2, 0, 0, 0],
-    [3, 9, 0, 0, 0, 0, 6, 2, 0]
-]
-
-
 def solve(bo):
 
     find = find_empty(bo)
@@ -95,7 +67,58 @@ def find_empty(bo):
     return None
 
 
-print_board(board)
-print("_________________________")
-solve(board)
-print_board(board)
+def create_board():
+    sudoku = ""
+
+    for i in range(1, 10):
+        msg = f'Ingresa la {i} linea de numeros: '
+        filas = input(msg)
+
+        if sudoku != "":
+            sudoku += "," + filas
+        else:
+            sudoku += filas
+
+    board = sudoku.split(",")
+
+    for i, num in enumerate(board):
+        board[i] = list(map(int, num))
+
+    return board
+
+
+def menu():
+    print("*" * 48)
+    print("Para ver la solución de un tablero de sudoku primero debes cargar sus valores, para hacerlo considera lo siguiente:\n")
+    print("Ingresa los numeros de la linea que el programa te indique, teniendo en consideracion que los espacios en blanco del tablero se repesentan con 0 aca.")
+    print("\n")
+
+    option = input("Quieres cargar una solución? (y/n): ")
+
+    while True:
+        if option == "y" or option == "n":
+            break
+        option = input("Quieres cargar una solución? (y/n): ")
+
+    return option
+
+
+def run_program(option):
+    if option == "y":
+        board = create_board()
+        print_board(board)
+        print("_________________________")
+        solve(board)
+        print_board(board)
+        exit()
+    elif option == "n":
+        exit()
+
+
+if __name__ == "__main__":
+    while True:
+        option = menu()
+        if option == 9:
+            break
+        else:
+            run_program(option)
